@@ -20,4 +20,13 @@ Datrich_2 <- Datrich_1 %>%
   mutate(g_weighted = g * weighting_term) %>% 
   mutate(pooled_fixed_effect = sum(g_weighted) / sum(weighting_term))
 
-#
+#metfor does this work much more quickly!!
+#escalc calculates effect sizes 
+Datrich_3 <- escalc(n1i = HighFaunaN, n2i = LowFaunaN, m1i = MeanvalueatHighFauna, m2i = MeanvalueatLowFauna, sd1i = SDatHighFauna, sd2i = SDatLowFauna, data = Datrich, measure = "SMD", append = TRUE) #yi gives g
+rich.overall <- rma(yi, vi, method = "FE", data = Datrich_3) #rma gives a bunch of regression modelling stats with NAs. We specify fixed effects which means certain regression modelling stats do not get filled, but they could if I had chosen another method. 
+
+#print a forest plot of the standardized mean diffs across studies 
+forest(rich.overall)
+
+#print a funnel plot of the inverse standard errors 
+funnel(rich.overall, yaxis = "seinv", main = "Inverse Standard Error")

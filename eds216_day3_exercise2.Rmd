@@ -1,0 +1,17 @@
+---
+title: "Exercise 2"
+author: "Scout Leonard"
+date: "9/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(metafor)
+
+rich_data_prepared <- read.csv("RichDataPreprepared.csv")
+```
+
