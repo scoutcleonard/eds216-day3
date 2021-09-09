@@ -15,6 +15,9 @@ Datrich_2 <- Datrich_1 %>%
   mutate(mean_se = pooled_sd * sqrt((1 / HighFaunaN) + (1 / LowFaunaN))) %>%
   mutate(standarized_mean_dif = ((MeanvalueatHighFauna - MeanvalueatLowFauna)/pooled_sd)) %>% 
   mutate(g = ((standarized_mean_dif) * (1 - (3 / ((4 * (HighFaunaN + LowFaunaN - 2) - 1)))))) %>%
-  mutate(corrected_standardized_mean_dif = sqrt(((HighFaunaN + LowFaunaN)/(LowFaunaN * HighFaunaN)) + (g^2 / (2 * (HighFaunaN + LowFaunaN)))))
+  mutate(corrected_standardized_mean_dif = sqrt(((HighFaunaN + LowFaunaN)/(LowFaunaN * HighFaunaN)) + (g^2 / (2 * (HighFaunaN + LowFaunaN))))) %>%
+  mutate(weighting_term = 1 / (corrected_standardized_mean_dif^2)) %>%
+  mutate(g_weighted = g * weighting_term) %>% 
+  mutate(pooled_fixed_effect = sum(g_weighted) / sum(weighting_term))
 
 #
